@@ -1,12 +1,12 @@
-class Section < ActiveRecord::Base
+class Page < ActiveRecord::Base
 
-  belongs_to :page
-  has_many :section_edits
-  has_many :editors, :through => :section_edits, :class_name => "AdminUser"
+  belongs_to :subject
+  has_many :sections
+  has_and_belongs_to_many :editors, :class_name => "AdminUser"
 
   scope :visible, lambda { where(:visible => true) }
   scope :invisible, lambda { where(:visible => false) }
-  scope :sorted, lambda { order("sections.position ASC") }
-  scope :newest_first, lambda { order("sections.created_at DESC")}
+  scope :sorted, lambda { order("pages.position ASC") }
+  scope :newest_first, lambda { order("pages.created_at DESC")}
 
 end

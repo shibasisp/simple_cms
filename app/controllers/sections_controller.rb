@@ -1,23 +1,23 @@
-class PagesController < ApplicationController
+class SectionsController < ApplicationController
 
-  layout false
+  layout "admin"
 
   def index
-    @pages = Page.sorted
+    @sections = Section.sorted
   end
 
   def show
-    @page = Page.find(params[:id])
+    @section = Section.find(params[:id])
   end
 
   def new
-    @page = Page.new({:name => "Default"})
+    @section = Section.new({:name => "Default"})
   end
 
   def create
-    @page = Page.new(page_params)
-    if @page.save
-      flash[:notice] = "Page created successfully."
+    @section = Section.new(section_params)
+    if @section.save
+      flash[:notice] = "Section created successfully."
       redirect_to(:action => 'index')
     else
       render('new')
@@ -25,34 +25,34 @@ class PagesController < ApplicationController
   end
 
   def edit
-    @page = Page.find(params[:id])
+    @section = Section.find(params[:id])
   end
 
   def update
-    @page = Page.find(params[:id])
-    if @page.update_attributes(page_params)
-      flash[:notice] = "Page updated successfully."
-      redirect_to(:action => 'show', :id => @page.id)
+    @section = Section.find(params[:id])
+    if @section.update_attributes(section_params)
+      flash[:notice] = "Section updated successfully."
+      redirect_to(:action => 'show', :id => @section.id)
     else
       render('edit')
     end
   end
 
   def delete
-    @page = Page.find(params[:id])
+    @section = Section.find(params[:id])
   end
 
   def destroy
-    page = Page.find(params[:id]).destroy
-    flash[:notice] = "Page destroyed successfully."
+    section = Section.find(params[:id]).destroy
+    flash[:notice] = "Section destroyed successfully."
     redirect_to(:action => 'index')
   end
 
 
   private
 
-    def page_params
-      params.require(:page).permit(:subject_id, :name, :permalink, :position, :visible)
+    def section_params
+      params.require(:section).permit(:page_id, :name, :position, :visible, :content_type, :content)
     end
 
 end
